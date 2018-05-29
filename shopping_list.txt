@@ -1,0 +1,1 @@
+[{"price": "150", "shoe": "sandals", "size": "5", "color": "red", "brand": "guess"}]
