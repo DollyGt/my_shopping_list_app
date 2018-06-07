@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <h1>{{username}}'s list for {{list_name}}</h1>
+    <a href="/{{username}}"><p>Go Back to Lists</p></a>
+    
+    <form method="POST" action="/{{username}}/{{list_name}}/add_item">
+        <input type="text" name="list_item"/>
+        <input type="hidden" name="list_id" value="{{list_item_id}}"/>
+        <input type="submit" value="Add"/>
+    </form>
+    
+    {% if list_items %}
+        {% for i in list_items %}
+            {% for item in i.list_items %}
+                <p>{{item}}</p>
+            {% endfor %}
+        {% endfor %}
+    {% else %}
+        <p>You have no items!</p>
+    {% endif %}
+    
+</body>
+</html>

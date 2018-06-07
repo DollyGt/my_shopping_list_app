@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Shopping List</h1>
+    <h2>Hello, {{username}}!</h2>
+    <a href="/"><p>logout</p></a>
+    
+    <form action="/{{username}}/create_new_list" method="POST">
+        <p>Please Add a List</p>
+        <input type="text" name="list_name" placeholder="Add a list.."/>
+        <input type="submit" value="Add"/>
+    </form>
+    
+    
+    {% if user_lists %}
+        {% for list in user_lists %}
+        <form action="/{{username}}/{{list.name}}" method="POST">
+            <input type="submit" value="{{list.name}}"/>
+        </form>
+        {% endfor %}
+    {% else %}
+        <p>You have no lists!</p>
+    {% endif %}
+   
+    
+</body>
+</html>
