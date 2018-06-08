@@ -12,7 +12,6 @@
     
     <form method="POST" action="/{{username}}/{{list_name}}/add_item">
         <input type="text" name="list_item"/>
-        <input type="hidden" name="list_id" value="{{list_item_id}}"/>
         <input type="submit" value="Add"/>
     </form>
     
@@ -20,6 +19,9 @@
         {% for i in list_items %}
             {% for item in i.list_items %}
                 <p>{{item}}</p>
+                <form action="/{{username}}/{{list_name}}/{{item}}/delete" method="POST">
+                    <input type="submit" value="Delete"/>
+                </form>
             {% endfor %}
         {% endfor %}
     {% else %}
@@ -28,3 +30,5 @@
     
 </body>
 </html>
+
+ 

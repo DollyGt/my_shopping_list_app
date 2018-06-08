@@ -20,9 +20,7 @@
     
     {% if user_lists %}
         {% for list in user_lists %}
-        <form action="/{{username}}/{{list.name}}" method="POST">
-            <input type="submit" value="{{list.name}}"/>
-        </form>
+        <a href="/{{username}}/{{list.name}}"><p>{{list.name}}</p></a>
         {% endfor %}
     {% else %}
         <p>You have no lists!</p>
