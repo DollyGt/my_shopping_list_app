@@ -1,1 +1,19 @@
+body{
+     /*background-image: url("/static/list.jpg");*/
+     background-repeat: no-repeat;
+     
+}
 
+
+.container {
+    width:100%;
+}
+
+.line {
+    border-right: 1px solid black;
+}
+
+.item p,
+.item form {
+    display: inline-block;
+}
