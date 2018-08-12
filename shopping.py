@@ -1,5 +1,6 @@
 import os
 from flask import Flask, request, render_template, redirect
+
 from pymongo import MongoClient
 
 MONGODB_URI = os.environ.get("MONGODB_URI")
@@ -15,6 +16,8 @@ def get_index():
 def do_login():
     username = request.form['username']
     return redirect(username)
+    
+
 
 @app.route("/<username>") 
 def get_userpage(username):
@@ -33,7 +36,6 @@ def add_item_to_list(username, list_name):
     save_list_items_to_mongo(username, list_name, list_item)
     return redirect(username)
     
-
 @app.route('/<username>/<list_name>/<item_name>/delete_item',methods=['POST'])
 def delete_item(username, list_name, item_name):
     with MongoClient(MONGODB_URI) as conn:
@@ -42,6 +44,16 @@ def delete_item(username, list_name, item_name):
         selected_list['list_items'].remove(item_name)
         db[username].save(selected_list)
         return redirect(username)
+    
+
+# @app.route('/<username>/<list_name>/<list_title>/delete_title',methods=['POST'])
+# def delete_title(username, list_name, list_title):
+#     with MongoClient(MONGODB_URI) as conn:
+#         db = conn[MONGODB_NAME]
+#         selected_list = db[username].find_one({'list':list_name})
+#         selected_list['list_items'].remove(list_title)
+#         db[username].save(selected_list)
+#         return redirect(username)
         
 @app.route('/<username>/<list_name>/<item_name>/priority_item',methods=['POST'])
 def priority_item(username, list_name, item_name):
@@ -74,7 +86,22 @@ def load_documents(username):
         db = conn[MONGODB_NAME]
         list_obj = db[username].find()
         return [l for l in list_obj]
-
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
 
 if __name__ == '__main__':
     app.run(host=os.getenv('IP', '0.0.0.0'), port=int(os.getenv('PORT', 8080)), debug=True)
+    
+    
+    
+    
