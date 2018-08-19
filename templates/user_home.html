@@ -2,83 +2,106 @@
 <html lang="en">
 
 <head>
-     <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.12/css/all.css" integrity="sha384-G0fIWCsCzJIMAVNQPfjH08cyYaUtMwjJwqiRKxxE/rx96Uroj1BtIQ6MLJuheaO9" crossorigin="anonymous">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.12/css/all.css" integrity="sha384-G0fIWCsCzJIMAVNQPfjH08cyYaUtMwjJwqiRKxxE/rx96Uroj1BtIQ6MLJuheaO9" crossorigin="anonymous">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous" />
     <link href="https://fonts.googleapis.com/css?family=Titan+One" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css" />
     <link rel="stylesheet" href="../static/css/style.css" type="text/css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 
 <body>
     <header>
-         <a href="/">
-             
-                        <p>logout</p>
-        </a>
-        
         <div class="container">
-            <div class="row ">
-                <div class="col-sm-6 user_info_left">
-                   
-                    <h3>User Details</h3>
-                   <p>Hello, {{username}} </p>
+            <br>
+            <a class="btn btn-default" href="/">Home</a>
+            <br>
+            {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                    <br>
+                    <div class="messages">
+                        {% for message in messages %}
+                        <div class="alert alert-info">{{ message }}</div><br>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            {% endwith %}             
+        </div>
+    </header>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-6">
+                <h3>Hello <span class="name">{{username}}</span></h3>
+                <form action="/{{username}}/create_new_list" method="POST">
+                    <label>Add Your Shopping List Title</label>
+                    <input class="form-control" type="text" name="list_name" placeholder="Add title eg food, todo..." required="required" /> </br>
+                    <input class="btn btn-success" type="submit" value="Add List" />
+                </form>
+            </div>
+
+            <div class="col-sm-6">
+                {% if documents %}
+                <h3>Your Lists</h3>
+                {% for document in documents %}
+                <h3 class="list-title"><button class="btn btn-primary" data-toggle="collapse" data-target="#table-{{loop.index}}">{{document.name}}</button></h3>
+                <div id="table-{{loop.index}}" class="collapse">
+                <table class="table table-bordered">
+                    <tr>
+                        <th>Item</th>
+                        <th>Priority</th>
+                        <th>Action</th>
+                    </tr>
+                    {% if document.list_items %} 
+                    {% for item in document.list_items %}
+                    <tr>
+                        <form action="/{{username}}/{{document.name}}/{{item.name}}/delete_item" method="POST">
+                        <td>{{item.name}}</td>
+                        <td><input value="{{item.priority}}" class="priority-added" name="priority-added" type="checkbox" 
+                        {% if item.priority == 1 %}
+                            checked
+                        {% endif %}
+                        onclick="return false;" onkeydown="return false;"
+                        ></td>
+                        <td>
+                            
+                            <input class="btn btn-danger" type="submit" value="Delete" />
+                        
+                        </td>
+                        </form>
+                    </tr>
+                    {% endfor %}
+                    <tr>
+                    <form method="POST" action="/{{username}}/{{document.name}}/add_item">
+                    <td><input class="form-control" type="text" name="list_item" required="required" /></td>
+                    <td><input value="1" name="priority" class="priority" type="checkbox"></td>
+                    <td><input class="btn btn-success" type="submit" value="Add Item" /></td>
+                    </form>
+                    </tr>
+                    {% else %}
+                    <tr><td>You Have no items, add more</td></tr>
+                    <tr>
+                    <form method="POST" action="/{{username}}/{{document.name}}/add_item">
+                    <td><input class="form-control" type="text" name="list_item" required="required" /></td>
+                    <td><input value="1" name="priority" class="priority" type="checkbox" /></td>
+                    <td><input class="btn btn-success" type="submit" value="Add Item" /></td>
+                    </form>
+                    </tr>
+                    {% endif %}
+                    </table>
+                    </div>
+                    <br>
+                    {% endfor %}
+                    {% endif %}
                 </div>
-                </hr>
-                <div class="col-sm-6">
-                    <h3>{{username}}'s Shopping List</h3>
-                </div>
+
+
             </div>
         </div>
-     </header>
-        <div class="container">
-            <div class="row-right">
-                <div class="col-sm-6">
-                    <h4>Add Your Shopping List Title</h4>
-                    <form action="/{{username}}/create_new_list" method="POST">
-                        <h3>Title:</h3>
-                        <input type="text" name="list_name" placeholder="Add title eg food, todo..." required="required" /> </br>
-                        </br>
-                        <input type="submit" value="Add List" />
-                    </form>
-                    </div>
-                    
-                    <div class="col-sm-6">
-                        
-                      
-                        
-                        {% if documents %} {% for document in documents %}
-                        <h3>{{document.name}} </h3>
-                        {% if document.list_items %} {% for item in document.list_items %}
-                        <div class="item">
-                            <p>{{item}}</p>
-                            <form action="/{{username}}/{{document.name}}/{{item}}/delete_item" method="POST">
-                                <input type="submit" value="Delete" />
-                            </form>
-                            <label>
-                  <input id="priority" type="checkbox">
-                  
-                  <span class="lever"></span>
-                  Priority
-                </label>
-                        </div>
-                        {% endfor %} {% else %}
-                        <p>You have no items!</p>
-                        {% endif %}
-
-                        <form method="POST" action="/{{username}}/{{document.name}}/add_item">
-                            <input type="text" name="list_item" required="required" />
-                            <input type="submit" value="Add Item" />
-                        </form>
-                        {% endfor %} {% else %}
-                        <p>You Need to Create A List</p>
-                        {% endif %}
-                        
-                    </div>
-                    </div>
-                </div>
+    </div>
 
 </body>
 

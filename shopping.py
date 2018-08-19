@@ -1,12 +1,12 @@
 import os
-from flask import Flask, request, render_template, redirect
-
+from flask import Flask, request, render_template, redirect, flash, session
 from pymongo import MongoClient
 
 MONGODB_URI = os.environ.get("MONGODB_URI")
 MONGODB_NAME = os.environ.get("MONGODB_NAME")
 
 app = Flask(__name__)
+app.secret_key = "secretKeyHere"
 
 @app.route('/')
 def get_index():
@@ -17,8 +17,6 @@ def do_login():
     username = request.form['username']
     return redirect(username)
     
-
-
 @app.route("/<username>") 
 def get_userpage(username):
     documents = load_documents(username)
@@ -32,8 +30,16 @@ def create_list(username):
     
 @app.route("/<username>/<list_name>/add_item", methods=["POST"]) 
 def add_item_to_list(username, list_name):
-    list_item= request.form['list_item']
+    if(request.form.getlist('priority') != None):
+        priority = 1
+    else:
+        priority = 0
+
+    name = request.form['list_item']
+    list_item= {'name': name, 'priority': priority}
     save_list_items_to_mongo(username, list_name, list_item)
+    msgString = 'Item "%s", added to "%s" list !'%(name,list_name)
+    flash(msgString)
     return redirect(username)
     
 @app.route('/<username>/<list_name>/<item_name>/delete_item',methods=['POST'])
@@ -41,17 +47,30 @@ def delete_item(username, list_name, item_name):
     with MongoClient(MONGODB_URI) as conn:
         db = conn[MONGODB_NAME]
         selected_list = db[username].find_one({'name':list_name})
-        selected_list['list_items'].remove(item_name)
+        #selected_list['list_items'].remove({'name': item_name})
+        selected_list['list_items'] = removeObjFromList(selected_list['list_items'], item_name)
+        
         db[username].save(selected_list)
+        msgString = 'Item "%s", removed from "%s" list !'%(item_name, selected_list['name'])
+        flash(msgString)
+        
         return redirect(username)
+        
+def removeObjFromList(list_items, item_name):
+    for counter, item in enumerate(list_items):
+        if item['name'] == item_name:
+            del(list_items[counter]) 
+            break
+        
+    return list_items
     
 
-# @app.route('/<username>/<list_name>/<list_title>/delete_title',methods=['POST'])
-# def delete_title(username, list_name, list_title):
+# @app.route('/<username>/<list_name>/<create_new_list>/delete_title',methods=['POST'])
+# def delete_title(username, list_name, create_new_list):
 #     with MongoClient(MONGODB_URI) as conn:
 #         db = conn[MONGODB_NAME]
 #         selected_list = db[username].find_one({'list':list_name})
-#         selected_list['list_items'].remove(list_title)
+#         selected_list['list_items'].remove(create_new_list)
 #         db[username].save(selected_list)
 #         return redirect(username)
         
@@ -92,13 +111,6 @@ def load_documents(username):
         
         
         
-        
-        
-        
-        
-        
-        
-
 if __name__ == '__main__':
     app.run(host=os.getenv('IP', '0.0.0.0'), port=int(os.getenv('PORT', 8080)), debug=True)
     
