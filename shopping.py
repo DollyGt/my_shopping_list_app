@@ -35,10 +35,11 @@ def add_item_to_list(username, list_name):
     else:
         priority = 0
 
-    name = request.form['list_item']
-    list_item= {'name': name, 'priority': priority}
+    item_name = request.form['item_name']
+    quantity = int(request.form['quantity'])
+    list_item= {'name': item_name, 'priority': priority, 'quantity': quantity}
     save_list_items_to_mongo(username, list_name, list_item)
-    msgString = 'Item "%s", added to "%s" list !'%(name,list_name)
+    msgString = 'Item "%s", added to "%s" list !'%(item_name,list_name)
     flash(msgString)
     return redirect(username)
     

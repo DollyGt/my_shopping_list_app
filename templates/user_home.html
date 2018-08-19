@@ -34,24 +34,42 @@
     </header>
     <div class="container">
         <div class="row">
-            <div class="col-sm-6">
+            <div class="col-sm-4">
                 <h3>Hello <span class="name">{{username}}</span></h3>
+                {% if documents %}
+                <h4>Your lists:</h4>
+                <table class="table table-striped">
+                    <tr>
+                        <th>Name</th>
+                        <th>View</th>
+                        <th>Actions</th>
+                    </tr>
+                    {% for document in documents %}
+                    <tr>
+                        <td>{{document.name}}</td>
+                        <td><button class="btn btn-primary" data-toggle="collapse" data-target="#table-{{loop.index}}">Open list</button></td>
+                        <td><a class="btn btn-danger" href="">Delete</a></td>
+                    </tr>
+                    {% endfor %}
+                </table>
+                {% endif %}
+                <br><br>
                 <form action="/{{username}}/create_new_list" method="POST">
-                    <label>Add Your Shopping List Title</label>
+                    <label>Add list title and create new list</label>
                     <input class="form-control" type="text" name="list_name" placeholder="Add title eg food, todo..." required="required" /> </br>
-                    <input class="btn btn-success" type="submit" value="Add List" />
+                    <input class="btn btn-success" type="submit" value="Create list" />
                 </form>
             </div>
 
-            <div class="col-sm-6">
+            <div id="myGroup" class="col-sm-8">
                 {% if documents %}
-                <h3>Your Lists</h3>
                 {% for document in documents %}
-                <h3 class="list-title"><button class="btn btn-primary" data-toggle="collapse" data-target="#table-{{loop.index}}">{{document.name}}</button></h3>
                 <div id="table-{{loop.index}}" class="collapse">
+                    <h3>{{document.name}}</h3>
                 <table class="table table-bordered">
                     <tr>
                         <th>Item</th>
+                        <th>Quantity</th>
                         <th>Priority</th>
                         <th>Action</th>
                     </tr>
@@ -60,6 +78,7 @@
                     <tr>
                         <form action="/{{username}}/{{document.name}}/{{item.name}}/delete_item" method="POST">
                         <td>{{item.name}}</td>
+                        <td>{{item.quantity}}</td>
                         <td><input value="{{item.priority}}" class="priority-added" name="priority-added" type="checkbox" 
                         {% if item.priority == 1 %}
                             checked
@@ -74,18 +93,20 @@
                         </form>
                     </tr>
                     {% endfor %}
-                    <tr>
+                    <tr class="bg-success">
                     <form method="POST" action="/{{username}}/{{document.name}}/add_item">
-                    <td><input class="form-control" type="text" name="list_item" required="required" /></td>
+                    <td><input placeholder="Item name" class="form-control" type="text" name="item_name" required="required" /></td>
+                    <td><input class="form-control" value="1" name="quantity" type="number"></td>
                     <td><input value="1" name="priority" class="priority" type="checkbox"></td>
                     <td><input class="btn btn-success" type="submit" value="Add Item" /></td>
                     </form>
                     </tr>
                     {% else %}
-                    <tr><td>You Have no items, add more</td></tr>
+                    <tr><td>You Have no items, add some</td></tr>
                     <tr>
                     <form method="POST" action="/{{username}}/{{document.name}}/add_item">
-                    <td><input class="form-control" type="text" name="list_item" required="required" /></td>
+                    <td><input placeholder="Item name" class="form-control" type="text" name="item_name" required="required" /></td>
+                    <td><input class="form-control" value="1" name="quantity" type="number"></td>
                     <td><input value="1" name="priority" class="priority" type="checkbox" /></td>
                     <td><input class="btn btn-success" type="submit" value="Add Item" /></td>
                     </form>
@@ -103,6 +124,12 @@
         </div>
     </div>
 
+<script>
+var $myGroup = $('#myGroup');
+$myGroup.on('show.bs.collapse','.collapse', function() {
+    $myGroup.find('.collapse.in').collapse('hide');
+});
+</script>
 </body>
 
 </html>

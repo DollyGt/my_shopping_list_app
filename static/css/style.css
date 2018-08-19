@@ -7,3 +7,7 @@ h3.list-title {
 .name {
     text-transform: capitalize;
 }
+.divider {
+    min-height: 15px;
+    background-color: #eee;
+}
