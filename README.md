@@ -1,40 +1,51 @@
 # Shopping List App - Data Centric Development
 
-One or two paragraphs providing an overview of your project.
+This site is a shopping list application which is designed to help users to keep track of their shopping list as well as manage their shopping list.
 
-Essentially, this part is your sales pitch.
+I have always struggled to do my shopping properly and sticking to the things that I needed, sometimes forgetfulness and random purchases took control as a result I ended up spending more money and time than I had intended to. Going shopping can be really challenging when you have forgotten your list, by the time you get home only then you realize you forgot to pick up one two things, therefore if one has a shopping list app, not only can they eliminate unnecessary return trips, they can also save money by eliminating random purchases.
 
 # UX
-Use this section to provide insight into your UX process, focusing on who this website is for, what it is that they want to achieve and how your project is the best way to help them achieve these things.
 
-In particular, as part of this section we recommend that you provide a list of User Stories, with the following general structure:
+Once the user is logged in, the shopping list application allows the user to create a title category for their shopping, they would then be redirected to list page where they would be prompted to add or create a title. They can then create a title for example; say food, and within this category they would be prompted to add items of their choice. The user can add as many items as they wish and the quantity. Only the categories or main titles would be on view until the user clicks on a particular title to access what’s in it. I have made it in such a way that the user could have their shopping list separated by categories which means each single different item can be added to a different category. Creating a shopping list within specific categories would ensure that the user can save time later when they want to access their lists, rather than having to go through a list of 50 items in order to edit 1 item, only the category within which the item is saved can be checked while ignoring other categories. It also means that the user can choose what category needs most attention.
 
-As a user type, I want to perform an action, so that I can achieve a goal.
-This section is also where you would share links to any wireframes, mockups, diagrams etc. that you created as part of the design process. These files should themselves either be included in the project itself (in an separate directory), or just hosted elsewhere online and can be in any format that is viewable inside the browser.
+The user can add a list whenever they think of an item and can even prioritize their list. The ability to do this helps the user to space out their purchases while ensuring that nothing is ever forgotten. Although one would question why shopping list app  over a paper list – a method which was heavily relied upon long before the technology era, the problem with the paper list is that it gets easily misplaced or forgotten, forgetting to bring the paper list to the store far defeats the purpose of making it in the first place. This scenario is all too common. Unlike paper, people always have their phones with them.
 
 # Features
-In this section, you should go over the different parts of your project, and describe each in a sentence or so.
 
-# Existing Features
-Feature 1 - allows users X to achieve Y, by having them fill out Z
-...
-For some/all of your features, you may choose to reference the specific project files that implement them, although this is entirely optional.
+1.Add list title – user creates a title for the list to be stored
 
-In addition, you may also use this section to discuss plans for additional features to be implemented in the future:
+2.Add item – this is where the user is prompted to create a shopping list of actual items
+
+3.Mark item as priority – all items marked as priority are saved on a separate page and under priority items
+
+4.Delayed list – this feature allows the user to add from their list the items that are needed only very late in a month or so, this is followed by a reminder nearing the date in which the initial purchase is intended
+
+5.Delete item – this feature deletes every other thing the user want to have deleted
+
+See a brief overview of how the site looks in different screens
+
+RMEMBER TO EDIT-------------------
 
 # Features Left to Implement
-# Another feature idea
+
+I would like to add a built-in recipe books where users would be able to add recipes and have each item needed for a meal gets automatically added to their shopping list. This feature would allow users to create a collection of their favourite recipes. Once a recipe gets selected, all the ingredients for that particular recipe would be added to the  shopping list.
+
 # Technologies Used
 In this section, you should mention all of the languages, frameworks, libraries, and any other tools that you have used to construct this project. For each, provide its name, a link to its official site and a short sentence of why it was used.
 
-JQuery
-The project uses JQuery to simplify DOM manipulation.
-Testing
-In this section, you need to convince the assessor that you have conducted enough testing to legitimately believe that the site works well. Essentially, in this part you will want to go over all of your user stories from the UX section and ensure that they all work as intended, with the project providing an easy and straightforward way for the users to achieve their goals.
+The technologies used for this website are as follows:
 
-Whenever it is feasible, prefer to automate your tests, and if you've done so, provide a brief explanation of your approach, link to the test file(s) and explain how to run them.
+1.HTML5
 
-For any scenarios that have not been automated, test the user stories manually and provide as much detail as is relevant. A particularly useful form for describing your testing process is via scenarios, such as:
+2.CSS3
+
+3.Bootstrap
+
+4.JavaScript/ jQuery
+
+5.Flask Microframework (Python)
+
+6.MongoDB (NoSQL Database)
 
 Contact form:
 Go to the "Contact Us" page
@@ -48,7 +59,8 @@ You should also mention in this section any interesting bugs or problems you dis
 If this section grows too long, you may want to split it off into a separate file and link to it from here.
 
 # Deployment
-This section should describe the process you went through to deploy the project to a hosting platform (e.g. GitHub Pages or Heroku).
+
+GitHub pages are used for hosting while the master branch is deployed to Heroku. Please click here to see a live demo on Heroku.
 
 In particular, you should provide all details of the differences between the deployed version and the development version, if any, including:
 
@@ -57,10 +69,20 @@ Different configuration files?
 Separate git branch?
 In addition, if it is not obvious, you should also describe how to run your code locally.
 
-# Credits
+REMEMBER TO EDIT--------------------------
+
+# To install and have it running
+
+You would have to first clone this repository by way of running the git clone-----------------------------
+
 # Content
-The text for section Y was copied from the Wikipedia article Z
+
+The text for section Y was copied from the Wikipedia article Z----------------------------------
+
 # Media
-The photos used in this site were obtained from ...
+
+The photos used in this site were obtained from pixels website. link------
+
 # Acknowledgements
+
 I received inspiration for this project from X
