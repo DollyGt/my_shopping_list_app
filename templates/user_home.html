@@ -14,7 +14,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 
-<body>
+<body id="lists">
     <header>
         <div class="container">
             <br>
@@ -34,8 +34,8 @@
     </header>
     <div class="container">
         <div class="row">
-            <div class="col-sm-4">
-                <h3>Hello <span class="name"></span></h3>
+            <div class="col-sm-4 lists-column">
+                <h3>Hello <span class="name">{{username}}</span></h3>
                 {% if documents %}
                 <h4>Your lists:</h4>
                 <table class="table table-striped">
@@ -45,11 +45,20 @@
                         <th>Actions</th>
                     </tr>
                     {% for document in documents %}
+                    
                     <tr>
                         <td>{{document.name}}</td>
                         <td><button class="btn btn-primary" data-toggle="collapse" data-target="#table-{{loop.index}}">Open list</button></td>
-                        <td><a class="btn btn-danger" href="">Delete</a></td>
+                        <td>
+                            <form action="/{{username}}/{{document.name}}/delete_list" method="POST">
+                            <input type="text" name="list_name" value="{{document.name}}" hidden />
+                            <input type="text" name="username" value="{{username}}" hidden />
+                            <input type="submit" class="btn btn-danger" value="Delete" />
+                            </form>
+                        </td>
+                        
                     </tr>
+                    
                     {% endfor %}
                 </table>
                 {% endif %}
@@ -60,8 +69,14 @@
                     <input class="btn btn-success" type="submit" value="Create list" />
                 </form>
             </div>
-
-            <div id="myGroup" class="col-sm-8">
+            <div class="col-sm-1"></div>
+            <div id="myGroup" class="col-sm-7 items-column">
+                <div id="welcome-message" class="collapse in">
+                    <h3>Hey !</h3>
+                    <p>Please choose Shopping List on the left to view items</p><br>
+                    <img title="Add New Shopping List" src="/static/image/bags-on-the-floor.jpg" class="img-responsive" alt="Woman Shopping" />
+                    <br>
+                </div>
                 {% if documents %}
                 {% for document in documents %}
                 <div id="table-{{loop.index}}" class="collapse">
@@ -76,21 +91,20 @@
                     {% if document.list_items %} 
                     {% for item in document.list_items %}
                     <tr>
-                        <form action="/{{username}}/{{document.name}}/{{item.name}}/delete_item" method="POST">
                         <td>{{item.name}}</td>
                         <td>{{item.quantity}}</td>
-                        <td><input value="{{item.priority}}" class="priority-added" name="priority-added" type="checkbox" 
+                        <td><input class="priority-added" name="priority-added" type="checkbox" 
                         {% if item.priority == 1 %}
                             checked
                         {% endif %}
                         onclick="return false;" onkeydown="return false;"
                         ></td>
                         <td>
-                            
+                            <form action="/{{username}}/{{document.name}}/{{item.name}}/delete_item" method="POST">
                             <input class="btn btn-danger" type="submit" value="Delete" />
-                        
+                            </form>
                         </td>
-                        </form>
+                        
                     </tr>
                     {% endfor %}
                     <tr class="bg-success">
@@ -114,8 +128,13 @@
                     {% endif %}
                     </table>
                     </div>
-                    <br>
+                    
                     {% endfor %}
+                    {% else %}
+                    <h3>You Have no Shopping Lists yet !</h3>
+                    <p>Please use form on the left to add one</p><br>
+                    <img title="Add New Shopping List" src="/static/image/bags-on-the-floor.jpg" class="img-responsive" alt="Woman Shopping" />
+                    <br>
                     {% endif %}
                 </div>
 
@@ -130,6 +149,7 @@ $myGroup.on('show.bs.collapse','.collapse', function() {
     $myGroup.find('.collapse.in').collapse('hide');
 });
 </script>
+<br/><br/><br/>
 </body>
 
 </html>

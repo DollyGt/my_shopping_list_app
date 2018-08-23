@@ -1,7 +1,21 @@
-body{
-
+#login {
+    background-image: url('../image/woman.jpg');
+    background-size: cover;
 }
-h3.list-title {
+#lists {
+    background-image: url('../image/bags.jpg');
+    background-size: cover; 
+}
+.lists-column {
+    background-color: rgba(255,255,255,0.85);
+    padding-bottom: 30px;
+    border-radius: 5px;    
+}
+.items-column {
+    background-color: rgba(255,255,255,0.85);
+    border-radius: 5px;    
+}
+.list-title {
     text-transform: uppercase !important;
 }
 .name {
@@ -10,4 +24,15 @@ h3.list-title {
 .divider {
     min-height: 15px;
     background-color: #eee;
+}
+.login-box {
+    background-color: rgba(255,255,255,0.85);
+    padding-bottom: 30px;
+    border-radius: 5px;
+}
+.login-box h1 {
+    font-weight: bolder;
+}
+#myGroup table {
+    background-color: white;
 }

@@ -30,11 +30,14 @@ def create_list(username):
     
 @app.route("/<username>/<list_name>/add_item", methods=["POST"]) 
 def add_item_to_list(username, list_name):
-    if(request.form.getlist('priority') != None):
+    priority = request.form.getlist('priority')
+    
+    if(len(priority) > 0):
         priority = 1
     else:
         priority = 0
-
+        
+    #priority = request.form.getlist('priority')
     item_name = request.form['item_name']
     quantity = int(request.form['quantity'])
     list_item= {'name': item_name, 'priority': priority, 'quantity': quantity}
@@ -48,13 +51,10 @@ def delete_item(username, list_name, item_name):
     with MongoClient(MONGODB_URI) as conn:
         db = conn[MONGODB_NAME]
         selected_list = db[username].find_one({'name':list_name})
-        #selected_list['list_items'].remove({'name': item_name})
         selected_list['list_items'] = removeObjFromList(selected_list['list_items'], item_name)
-        
         db[username].save(selected_list)
         msgString = 'Item "%s", removed from "%s" list !'%(item_name, selected_list['name'])
         flash(msgString)
-        
         return redirect(username)
         
 def removeObjFromList(list_items, item_name):
@@ -89,10 +89,15 @@ def create_list_for_user(username, list_name):
         db = conn[MONGODB_NAME]
         db[username].insert({'name': list_name, 'list_items': [] })
         
-# def load_lists_by_username(username):
-#     with MongoClient(MONGODB_URI) as conn:
-#         db = conn[MONGODB_NAME]
-#         return db[username].find()
+@app.route('/<username>/<list_name>/delete_list',methods=['POST'])        
+def delete_list(username, list_name):
+    with MongoClient(MONGODB_URI) as conn:
+        db = conn[MONGODB_NAME]
+        #db[username].drop(list_name)
+        dbU = db[username]
+        query = { "name": list_name }
+        dbU.delete_one(query)
+        return redirect(username)
 
 def save_list_items_to_mongo(username, list_name, new_list_item):
     with MongoClient(MONGODB_URI) as conn:
@@ -108,13 +113,6 @@ def load_documents(username):
         return [l for l in list_obj]
         
         
-        
-        
-        
-        
 if __name__ == '__main__':
     app.run(host=os.getenv('IP', '0.0.0.0'), port=int(os.getenv('PORT', 8080)), debug=True)
-    
-    
-    
     

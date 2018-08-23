@@ -15,24 +15,37 @@
 <title>Shopping List App</title>
 </head>
 
-<body>
-  
+<body id="login">
+  <br/><br/><br/>
+  <div class="container text-center">
+    <div class="row">
+      <div class="col-sm-4 col-sm-offset-4 login-box">
+        <h1>Shopping List App</h1>
+        <h4>Helping you improve your shopping experience</h4>
+        
+        <form class="text-left" action='/login' method='POST'>
+          <label>Username</label>
+          <input autocomplete="username name login" class="form-control" type="text" name="username" placeholder='User Name' />
+          </br>
+          <label>Password</label>
+          <input autocomplete=" password" class="form-control" type="password" name="password" placeholder='********' />
+          <br/>
+          <input class="btn btn-success" type="submit" value="Sign In" />
+        </form>            
+      </div>
+    </div>
+    
+
+    
+    
+  </div>
   <div class="title">
-    <h1>Shopping List App</h1>
-    <h4>Helping you improve your shopping experience</h4>
+
   </div>
   <div class="Homepage">
     <div class="first">
       <didv class="second">
        <div class="formBox">
-         <form action='/login' method='POST'>
-           <p>Username</p>
-            <input type="text" name="username" placeholder='username' />
-            </br>
-            <p>Password</p>
-            <input type="password" name="password" placeholder='********' />
-            <input type="submit" value="Sign In" />
-          </form>
        </div>
       </didv>
     </div>

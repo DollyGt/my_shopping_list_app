@@ -2,7 +2,7 @@
 
 This site is a shopping list application which is designed to help users to keep track of their shopping list as well as manage their shopping list.
 
-I have always struggled to do my shopping properly and sticking to the things that I needed, sometimes forgetfulness and random purchases took control as a result I ended up spending more money and time than I had intended to. Going shopping can be really challenging when you have forgotten your list, by the time you get home only then you realize you forgot to pick up one two things, therefore if one has a shopping list app, not only can they eliminate unnecessary return trips, they can also save money by eliminating random purchases.
+I have always struggled to do my shopping properly and sticking to the things that I needed, sometimes forgetfulness and random purchases took control as a result I ended up spending more money and time than I had intended to. Going shopping can be really challenging when you have forgotten your list, by the time you get home only then you realize you forgot to pick up one or two things, therefore if one has a shopping list app, not only can they eliminate unnecessary return trips, they can also save money by eliminating random purchases.
 
 # UX
 
@@ -46,6 +46,16 @@ The technologies used for this website are as follows:
 5.Flask Microframework (Python)
 
 6.MongoDB (NoSQL Database)
+
+
+# Testing
+
+The website is user friendly, recognises  desktop browsers and it is also mobile compatible. Using webview/ chrome view and safari same website can be used as an Android App with zero changes. All automated tests are in full view in tests.py. In order for you to be able to run the tests, you would have to have your virtual environment activated and then proceed to type:
+
+$ python3 manage.py test.py
+
+Below is an overview of how the site looks with different screen sizes.------------------------------
+
 
 Contact form:
 Go to the "Contact Us" page
