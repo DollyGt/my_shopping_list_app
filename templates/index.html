@@ -10,48 +10,91 @@
     <link href="https://fonts.googleapis.com/css?family=Titan+One" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css" />
     <link rel="stylesheet" href="../static/css/style.css" type="text/css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
    
   
 <title>Shopping List App</title>
 </head>
 
 <body id="login">
-  <br/><br/><br/>
+  {% if session['logged_in'] %}
+        <nav class="navbar navbar-default">
+          <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              <a class="navbar-brand" href="#">Shopping List App</a>
+            </div>
+        
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+              <ul class="nav navbar-nav">
+                <li><a href="/">Home <span class="sr-only">(current)</span></a></li>
+                <li><a href="/{{user_name}}">Lists</a></li>
+                <li><a href="/logout">Log Out</a></li>
+              </ul>
+              
+            </div><!-- /.navbar-collapse -->
+          </div><!-- /.container-fluid -->
+        </nav>
+        <br>
+        <div class="container">
+          <h2>Welcome {{user_name}}, please use navigation to do things !</h2>
+          <img class="img-responsive" src="/static/image/bags.jpg"/>
+        </div>
+        
+  {% else %}
   <div class="container text-center">
     <div class="row">
       <div class="col-sm-4 col-sm-offset-4 login-box">
         <h1>Shopping List App</h1>
         <h4>Helping you improve your shopping experience</h4>
         
+            {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                    <br>
+                    <div class="messages text-left">
+                        {% for message in messages %}
+                        <div class="alert alert-info alert-dismissible">
+                            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                            {{ message }}
+                        </div><br>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            {% endwith %} 
+        
         <form class="text-left" action='/login' method='POST'>
-          <label>Username</label>
-          <input autocomplete="username name login" class="form-control" type="text" name="username" placeholder='User Name' />
+          <div class="text-center">
+            <label class="radio-inline"><input type="radio" value="login" name="mode" checked="checked">Login</label>
+            <label class="radio-inline"><input type="radio" value="register" name="mode">Register</label>
+          </div>
+          <br><br>
+          <label>user_name</label>
+          <input autocomplete="user_name name login" class="form-control" type="text" name="user_name" placeholder='User Name' />
           </br>
           <label>Password</label>
-          <input autocomplete=" password" class="form-control" type="password" name="password" placeholder='********' />
+          <input autocomplete="password" class="form-control" type="password" name="password" placeholder='********' />
           <br/>
           <input class="btn btn-success" type="submit" value="Sign In" />
         </form>            
       </div>
     </div>
-    
-
-    
-    
-  </div>
-  <div class="title">
-
-  </div>
-  <div class="Homepage">
-    <div class="first">
-      <didv class="second">
-       <div class="formBox">
-       </div>
-      </didv>
-    </div>
-  </div>
+  
+  </div>        
+  {% endif %}
+  
+  
+  
   
 
+<br><br><br><br><br>
 </body>
 
 </html>

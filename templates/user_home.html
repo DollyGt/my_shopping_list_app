@@ -16,16 +16,42 @@
 
 <body id="lists">
     <header>
+        <nav class="navbar navbar-default">
+          <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              <a class="navbar-brand" href="#">Shopping List App</a>
+            </div>
+        
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+              <ul class="nav navbar-nav">
+                <li><a href="/">Home <span class="sr-only">(current)</span></a></li>
+                <li><a href="/{{user_name}}">Lists</a></li>
+                <li><a href="/logout">Log Out</a></li>
+              </ul>
+              
+            </div><!-- /.navbar-collapse -->
+          </div><!-- /.container-fluid -->
+        </nav>
         <div class="container">
             <br>
-            <a class="btn btn-default" href="/">Home</a>
             <br>
             {% with messages = get_flashed_messages() %}
                 {% if messages %}
                     <br>
                     <div class="messages">
                         {% for message in messages %}
-                        <div class="alert alert-info">{{ message }}</div><br>
+                        <div class="alert alert-info alert-dismissible">
+                            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                            {{ message }}
+                        </div><br>
                         {% endfor %}
                     </div>
                 {% endif %}
@@ -35,8 +61,29 @@
     <div class="container">
         <div class="row">
             <div class="col-sm-4 lists-column">
-                <h3>Hello <span class="name">{{username}}</span></h3>
-                {% if documents %}
+                <h3>Hello <span class="name">{{user_name}}</span></h3>
+                {% if priorities %}
+                <h4>Priorities:</h4>
+                <table class="table table-striped">
+                    <tr>
+                        <th>Item</th>
+                        <th>List</th>
+                        <th>Delete Item</th>
+                    </tr>
+                    {% for prio in priorities %}
+                    <tr>
+                        <td>{{ prio.item_name }}</td>
+                        <td>{{ prio.list_name }}</td>
+                        <td>
+                            <form action="/{{user_name}}/{{prio.list_name}}/{{prio.item_name}}/delete_item" method="POST">
+                                <input class="btn btn-danger" type="submit" value="Delete" />
+                            </form>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </table>
+                {% endif %}
+                {% if lists %}
                 <h4>Your lists:</h4>
                 <table class="table table-striped">
                     <tr>
@@ -44,26 +91,24 @@
                         <th>View</th>
                         <th>Actions</th>
                     </tr>
-                    {% for document in documents %}
+                    {% for list in lists %}
                     
                     <tr>
-                        <td>{{document.name}}</td>
+                        <td><h5>{{list.list_name}}</h5></td>
                         <td><button class="btn btn-primary" data-toggle="collapse" data-target="#table-{{loop.index}}">Open list</button></td>
                         <td>
-                            <form action="/{{username}}/{{document.name}}/delete_list" method="POST">
-                            <input type="text" name="list_name" value="{{document.name}}" hidden />
-                            <input type="text" name="username" value="{{username}}" hidden />
+                            <form action="/{{user_name}}/{{list.list_name}}/delete_list" method="POST">
+                            <input type="text" name="list_name" value="{{list.list_name}}" hidden />
+                            <input type="text" name="user_name" value="{{user_name}}" hidden />
                             <input type="submit" class="btn btn-danger" value="Delete" />
                             </form>
                         </td>
-                        
                     </tr>
-                    
                     {% endfor %}
                 </table>
                 {% endif %}
                 <br><br>
-                <form action="/{{username}}/create_new_list" method="POST">
+                <form action="/{{user_name}}/create_new_list" method="POST">
                     <label>Add list title and create new list</label>
                     <input class="form-control" type="text" name="list_name" placeholder="Add title eg food, todo..." required="required" /> </br>
                     <input class="btn btn-success" type="submit" value="Create list" />
@@ -77,10 +122,10 @@
                     <img title="Add New Shopping List" src="/static/image/bags-on-the-floor.jpg" class="img-responsive" alt="Woman Shopping" />
                     <br>
                 </div>
-                {% if documents %}
-                {% for document in documents %}
+                {% if lists %}
+                {% for list in lists %}
                 <div id="table-{{loop.index}}" class="collapse">
-                    <h3>{{document.name}}</h3>
+                    <h3>{{list.list_name}}</h3>
                 <table class="table table-bordered">
                     <tr>
                         <th>Item</th>
@@ -88,19 +133,19 @@
                         <th>Priority</th>
                         <th>Action</th>
                     </tr>
-                    {% if document.list_items %} 
-                    {% for item in document.list_items %}
+                    {% if list.list_items %} 
+                    {% for item in list.list_items %}
                     <tr>
-                        <td>{{item.name}}</td>
-                        <td>{{item.quantity}}</td>
+                        <td>{{item.item_name}}</td>
+                        <td>{{item.item_quantity}}</td>
                         <td><input class="priority-added" name="priority-added" type="checkbox" 
-                        {% if item.priority == 1 %}
+                        {% if item.item_priority == 1 %}
                             checked
                         {% endif %}
                         onclick="return false;" onkeydown="return false;"
                         ></td>
                         <td>
-                            <form action="/{{username}}/{{document.name}}/{{item.name}}/delete_item" method="POST">
+                            <form action="/{{user_name}}/{{list.list_name}}/{{item.item_name}}/delete_item" method="POST">
                             <input class="btn btn-danger" type="submit" value="Delete" />
                             </form>
                         </td>
@@ -108,20 +153,20 @@
                     </tr>
                     {% endfor %}
                     <tr class="bg-success">
-                    <form method="POST" action="/{{username}}/{{document.name}}/add_item">
+                    <form method="POST" action="/{{user_name}}/{{list.list_name}}/add_item">
                     <td><input placeholder="Item name" class="form-control" type="text" name="item_name" required="required" /></td>
-                    <td><input class="form-control" value="1" name="quantity" type="number"></td>
-                    <td><input value="1" name="priority" class="priority" type="checkbox"></td>
+                    <td><input class="form-control" value="1" name="item_quantity" type="number"></td>
+                    <td><input value="1" name="item_priority" class="item_priority" type="checkbox"></td>
                     <td><input class="btn btn-success" type="submit" value="Add Item" /></td>
                     </form>
                     </tr>
                     {% else %}
                     <tr><td>You Have no items, add some</td></tr>
                     <tr>
-                    <form method="POST" action="/{{username}}/{{document.name}}/add_item">
+                    <form method="POST" action="/{{user_name}}/{{list.list_name}}/add_item">
                     <td><input placeholder="Item name" class="form-control" type="text" name="item_name" required="required" /></td>
-                    <td><input class="form-control" value="1" name="quantity" type="number"></td>
-                    <td><input value="1" name="priority" class="priority" type="checkbox" /></td>
+                    <td><input class="form-control" value="1" name="item_quantity" type="number"></td>
+                    <td><input value="1" name="item_priority" class="priority" type="checkbox" /></td>
                     <td><input class="btn btn-success" type="submit" value="Add Item" /></td>
                     </form>
                     </tr>
