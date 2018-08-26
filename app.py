@@ -70,8 +70,8 @@ def logout():
 @app.route("/<user_name>") 
 def get_userpage(user_name):
     userObj = get_user(user_name)
-    #priorities = load_priority_items(user_name)
-    priorities = []
+    priorities = load_priority_items(user_name)
+    #priorities = []
     return render_template("user_home.html", user_name=user_name, lists=userObj['lists'], priorities=priorities)
 
 @app.route("/<user_name>/create_new_list", methods=["POST"]) 
@@ -144,10 +144,9 @@ def load_priority_items(user_name):
     lists_with_priority = []
     for list in user['lists']:
         for item in list['list_items']:
-            if item.get('priority') > 0:
-                list_name = list.get('name')
-                table_id = list_name.replace(" ", "")
-                item_name = item.get('name')
+            if item['item_priority'] > 0:
+                list_name = list['list_name']
+                item_name = item['item_name']
                 lists_with_priority.append({'list_name':list_name, 'item_name': item_name})
             
     return lists_with_priority
