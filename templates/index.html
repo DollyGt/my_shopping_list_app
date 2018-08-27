@@ -44,18 +44,29 @@
           </div><!-- /.container-fluid -->
         </nav>
         <br>
-        <div class="container">
-          <h2>Welcome {{user_name}}, please use navigation to do things !</h2>
-          <img class="img-responsive" src="/static/image/bags.jpg"/>
-        </div>
         
+        <div class="container">
+          <h2>Welcome {{user_name}}, begin creating your shopping list!</h2>
+        <a href="/{{user_name}}">Create My List</a>
+          <!--<img class="img-responsive" src="/static/image/bags.jpg"/>-->
+        </div>
+       
+         
   {% else %}
-  <div class="container text-center">
+  </br>
+  <div class="container">
     <div class="row">
-      <div class="col-sm-4 col-sm-offset-4 login-box">
+    <div class="col-md-6">
         <h1>Shopping List App</h1>
         <h4>Helping you improve your shopping experience</h4>
-        
+  </div>
+  </div>
+  
+   <div class="row">
+    <div class="col-md-6">
+  <div class="container text-center">
+      <div class="col-sm-4 col-sm-offset-4 login-box">
+       
             {% with messages = get_flashed_messages() %}
                 {% if messages %}
                     <br>
@@ -86,14 +97,11 @@
         </form>            
       </div>
     </div>
-  
+  </div>
   </div>        
   {% endif %}
   
   
-  
-  
-
 <br><br><br><br><br>
 </body>
 

@@ -34,5 +34,15 @@
     font-weight: bolder;
 }
 #myGroup table {
-    background-color: white;
+    background-color: skyblue;
 }
+
+
+/*.btn my_list {*/
+/*    border-top: 1px solid #ee3780;*/
+/*    border-radius: 0px;*/
+/*    display: block;*/
+/*    background-color: transparent;*/
+/*    color: black;*/
+/*    transition: all ease-in-out 0.3s;*/
+/*}*/
