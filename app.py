@@ -142,12 +142,13 @@ def delete_list(user_name, list_name):
 def load_priority_items(user_name):
     user = get_user(user_name)
     lists_with_priority = []
-    for list in user['lists']:
-        for item in list['list_items']:
-            if item['item_priority'] > 0:
-                list_name = list['list_name']
-                item_name = item['item_name']
-                lists_with_priority.append({'list_name':list_name, 'item_name': item_name})
+    if user['lists'] is not None:
+        for list in user['lists']:
+            for item in list['list_items']:
+                if item['item_priority'] > 0:
+                    list_name = list['list_name']
+                    item_name = item['item_name']
+                    lists_with_priority.append({'list_name':list_name, 'item_name': item_name})
             
     return lists_with_priority
 

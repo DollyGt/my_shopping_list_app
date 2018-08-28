@@ -24,7 +24,10 @@ The user can add a list whenever they think of an item and can even prioritize t
 
 See a brief overview of how the site looks in different screens
 
-RMEMBER TO EDIT-------------------
+
+ ** RMEMBER TO EDIT-------------------**
+
+Click on this [link](https://www.shoutem.com/builder/design/smartphone?nid=207360545&signup=true#/homepage/) to access a live version of this site.
 
 # Features Left to Implement
 
@@ -53,7 +56,7 @@ The technologies used for this website are as follows:
 
 The website is user friendly, recognises  desktop browsers and it is also mobile compatible. Using webview/ chrome view and safari same website can be used as an Android App with zero changes. All automated tests are in full view in tests.py. In order for you to be able to run the tests, you would have to have your virtual environment activated and then proceed to type:
 
-$ python3 manage.py test.py
+** $ python3 manage.py test.py **
 
 Below is an overview of how the site looks with different screen sizes.------------------------------
 
@@ -86,13 +89,10 @@ REMEMBER TO EDIT--------------------------
 
 You would have to first clone this repository by way of running the git clone-----------------------------
 
-# Content
-
-The text for section Y was copied from the Wikipedia article Z----------------------------------
 
 # Media
 
-The photos used in this site were obtained from pixels website. link------
+The photos used in this site were obtained from pexels website. Click on this [link](https://www.pexels.com/) to access thier website.
 
 # Acknowledgements
 

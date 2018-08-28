@@ -34,15 +34,26 @@
     font-weight: bolder;
 }
 #myGroup table {
-    background-color: skyblue;
+    background-color: #FFFFFF;
+}
+.header .title {
+    font-family: 'Titan One', cursive;
+    font-size: 80px;
+    font-weight: 100;
+    color: #C83725;
+    text-shadow: 1px 1px black;
+    vertical-align: middle;
+   
 }
 
+.btn-success {
+    background-color: gray;
+    border-color: gray;
+    margin: 5px;
+}
 
-/*.btn my_list {*/
-/*    border-top: 1px solid #ee3780;*/
-/*    border-radius: 0px;*/
-/*    display: block;*/
-/*    background-color: transparent;*/
-/*    color: black;*/
-/*    transition: all ease-in-out 0.3s;*/
-/*}*/
+.btn-success:hover {
+    background-color: #C83725;
+    border-color: #ee3780;
+}
+
