@@ -46,13 +46,13 @@
    
 }
 
-.btn-success {
+.btn-success .btn-info  {
     background-color: gray;
     border-color: gray;
     margin: 5px;
 }
 
-.btn-success:hover {
+.btn-success .btn-info:hover {
     background-color: #C83725;
     border-color: #ee3780;
 }
