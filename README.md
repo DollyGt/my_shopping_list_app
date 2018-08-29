@@ -78,9 +78,7 @@ GitHub pages are used for hosting while the master branch is deployed to Heroku.
 
 For deployment, you would have to:
 
-1.Fist create a workspace in visual studio {% codeblock title lang:language URL link_text %}
-
-{% endcodeblock %}
+1.Fist create a workspace in visual studio 
 
 2.Link the work space to Github repository
 
