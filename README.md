@@ -28,7 +28,7 @@ In order to use this site, users must first register and if they are already reg
 
 See a brief overview of how the site looks in different screens
 
-* Below is an overview of how the site looks on different screen sizes.
+* Below are screenshots of how the site looks on different screen sizes.
 
 <!--![alt text](https://github.com/DollyGt/my_shopping_list_app/blob/master/static/image/bags.jpg)-->
 
@@ -39,7 +39,7 @@ See a brief overview of how the site looks in different screens
 
 I would like to add a built-in recipe books where users would be able to add recipes and have each item needed for a meal gets automatically added to their shopping list. This feature would allow users to create a collection of their favourite recipes. Once a recipe gets selected, all the ingredients for that particular recipe would be added to the  shopping list automatically.
 
-I would also like to add a delayed list feature – this feature would allow the user to add from their list the items that are needed only very late in a month or so, this is followed by a reminder nearing the date in which the initial purchase is intended.
+I would also like to add a delayed list feature – this feature would allow the user to add from their list the items that are needed only very late in a month or so, this would be followed by a reminder nearing the date in which the initial purchase is intended.
 
 # Technologies Used
 
@@ -71,7 +71,6 @@ If a user is not registered and they try to log in , the error message will retu
 
 An empty form will return a field required message if the user fails to type in their list title
 
-* Below is an overview of how the site looks with different screen sizes.
 
 # Deployment
 
@@ -88,6 +87,7 @@ For deployment, you would have to:
 pip install the following:
 
 ** sudo pip3 freeze --local >requirements.txt
+
 ** sudo pip3 install gunicorn
 
 gunicorn should now be in the requirements.txt

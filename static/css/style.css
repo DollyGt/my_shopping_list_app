@@ -38,7 +38,7 @@
 }
 .header .title {
     font-family: 'Titan One', cursive;
-    font-size: 80px;
+    font-size: 50px;
     font-weight: 100;
     color: #C83725;
     text-shadow: 1px 1px black;
@@ -46,13 +46,13 @@
    
 }
 
-.btn-success .btn-info  {
+.btn-success {
     background-color: gray;
     border-color: gray;
     margin: 5px;
 }
 
-.btn-success .btn-info:hover {
+.btn-success:hover {
     background-color: #C83725;
     border-color: #ee3780;
 }
