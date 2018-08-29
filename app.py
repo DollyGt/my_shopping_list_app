@@ -50,8 +50,6 @@ def do_login():
                 db['users'].insert({'user_name': user_name, 'password':password, 'lists':[]})
                 session['logged_in'] = True
                 session['user_name'] = user_name
-                msgString = 'User created you can move forward'
-                flash(msgString)
                 return render_template('index.html',user_name=user_name)
             else:
                 msgString = 'User with the same name already exist'
@@ -142,7 +140,7 @@ def delete_list(user_name, list_name):
 def load_priority_items(user_name):
     user = get_user(user_name)
     lists_with_priority = []
-    if user['lists'] is not None:
+    if len(user['lists']) > 0:
         for list in user['lists']:
             for item in list['list_items']:
                 if item['item_priority'] > 0:
