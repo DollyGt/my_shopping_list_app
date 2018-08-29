@@ -78,19 +78,19 @@ GitHub pages are used for hosting while the master branch is deployed to Heroku.
 
 For deployment, you would have to:
 
-1.Fist create a workspace in visual studio 
+*_Fist create a workspace in visual studio_* 
 
-2.Link the work space to Github repository
+*_Link the work space to Github repository_*
 
-pip install the following:
+**_pip install the following:_**
 
-** sudo pip3 freeze --local >requirements.txt
+**_sudo pip3 freeze --local >requirements.txt_**
 
-** sudo pip3 install gunicorn
+**_sudo pip3 install gunicorn_**
 
-gunicorn should now be in the requirements.txt
+**_gunicorn should now be in the requirements.txt_**
 
-3.Go to heroku and link the Github repository by deploying it manually. Once this step is done, each time you push to Github the Github master branch would be automatically update
+**_Go to heroku and link the Github repository by deploying it manually. Once this step is done, each time you push to Github the Github master branch would be automatically update._**
 
 
 # To install and have it running
@@ -104,6 +104,4 @@ To clone this repository follow the following command:
 
 The photos used in this site were obtained from pexels website. Click on this [link](https://www.pexels.com/) to access thier website.
 
-# Acknowledgements
 
-I received inspiration for this project from X
