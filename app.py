@@ -1,8 +1,9 @@
+from __future__ import print_function
+import sys
 import os
 from flask import Flask, request, render_template, redirect, flash, session, abort
 from pymongo import MongoClient
 from bson.objectid import ObjectId
-from pprint import pprint
 
 MONGODB_URI = os.environ.get("MONGODB_URI")
 MONGODB_NAME = os.environ.get("MONGODB_NAME")
@@ -25,7 +26,7 @@ def do_login():
         user_name = request.form['user_name'].strip()
         password = request.form['password'].strip()
         mode = request.form['mode']
-        user = db['users'].find_one({'user_name':user_name})
+        user = get_user(user_name)
         if mode == 'login':
             if not user:
                 msgString = 'There is no user "%s"'%(user_name)
@@ -65,12 +66,19 @@ def logout():
     flash(msgString)
     return render_template('index.html')
     
-@app.route("/<user_name>") 
+@app.route("/<user_name>/") 
 def get_userpage(user_name):
-    userObj = get_user(user_name)
-    priorities = load_priority_items(user_name)
-    #priorities = []
-    return render_template("user_home.html", user_name=user_name, lists=userObj['lists'], priorities=priorities)
+    user = get_user(user_name)
+    
+    lists= []
+    if not user:
+        lists = []
+    else:
+        for list in user['lists']:
+            lists.append(list)
+            
+    priorities = load_priority_items(lists)
+    return render_template("user_home.html", user_name=user_name, lists=lists, priorities=priorities)
 
 @app.route("/<user_name>/create_new_list", methods=["POST"]) 
 def create_list(user_name):
@@ -137,26 +145,30 @@ def delete_list(user_name, list_name):
     flash(msgString)
     return redirect(user_name)
 
-def load_priority_items(user_name):
-    user = get_user(user_name)
+def load_priority_items(user_lists):
     lists_with_priority = []
-    if len(user['lists']) > 0:
-        for list in user['lists']:
-            for item in list['list_items']:
-                if item['item_priority'] > 0:
-                    list_name = list['list_name']
-                    item_name = item['item_name']
-                    lists_with_priority.append({'list_name':list_name, 'item_name': item_name})
-            
+    for list in user_lists:
+        for item in list['list_items']:
+            if item['item_priority'] > 0:
+                list_name = list['list_name']
+                item_name = item['item_name']
+                lists_with_priority.append({'list_name':list_name, 'item_name': item_name})
+        
     return lists_with_priority
 
 def get_user(user_name):
-    with MongoClient(MONGODB_URI) as conn:
-        db = conn[MONGODB_NAME]
-        collection = db['users']
-        userCursor = collection.find({'user_name':user_name})
-        for userObj in userCursor:
-            return userObj
+    user = {}
+    client = MongoClient(MONGODB_URI)
+    db = client[MONGODB_NAME]
+    users = db['users']
+    res = users.find({'user_name':user_name})
+    for u in res:
+        user = u
+        
+    # eprint(user)
+    client.close()
+    return user
+
 
 def removeObjFromList(list, item_name):
     for counter, item in enumerate(list):
@@ -170,12 +182,18 @@ def create_list_for_user(user_name, list_name):
     user = get_user(user_name)
     user['lists'].append({'list_name':list_name, 'list_items':[]})
     save_user_lists(user)
+    return
 
 def save_user_lists(user):
     with MongoClient(MONGODB_URI) as conn:
         db = conn[MONGODB_NAME]
         db['users'].find_one_and_update({"_id": user['_id']}, 
                                  {"$set": {"lists": user['lists']}})
+    return
+
+def eprint(*args, **kwargs):
+    print(*args, file=sys.stderr, **kwargs)
+
         
 if __name__ == '__main__':
     app.run(host=os.getenv('IP', '0.0.0.0'), port=int(os.getenv('PORT', 8080)), debug=True)
