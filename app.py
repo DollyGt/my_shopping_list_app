@@ -4,14 +4,13 @@ import os
 from flask import Flask, request, render_template, redirect, flash, session, abort
 from pymongo import MongoClient
 from bson.objectid import ObjectId
-import logging
-logging.basicConfig(level=logging.DEBUG)
-
+ 
 MONGODB_URI = os.environ.get("MONGODB_URI")
 MONGODB_NAME = os.environ.get("MONGODB_NAME")
 
 app = Flask(__name__)
 app.secret_key = "secretKeyHere"
+
 
 @app.route('/')
 def get_index():
@@ -197,6 +196,7 @@ def save_user_lists(user):
 def eprint(*args, **kwargs):
     print(*args, file=sys.stderr, **kwargs)
 
+     
         
 if __name__ == '__main__':
     app.run(host=os.getenv('IP', '0.0.0.0'), port=int(os.getenv('PORT', 8080)), debug=True)
