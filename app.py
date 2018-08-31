@@ -4,6 +4,8 @@ import os
 from flask import Flask, request, render_template, redirect, flash, session, abort
 from pymongo import MongoClient
 from bson.objectid import ObjectId
+import logging
+logging.basicConfig(level=logging.DEBUG)
 
 MONGODB_URI = os.environ.get("MONGODB_URI")
 MONGODB_NAME = os.environ.get("MONGODB_NAME")
