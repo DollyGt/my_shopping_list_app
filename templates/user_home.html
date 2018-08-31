@@ -5,69 +5,193 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-    <script type="text/javascript" src="https://code.jquery.com/jquery.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/hover.css/2.1.1/css/hover-min.css" type="text/css" />
-    <title>Document</title>
-    <link rel="stylesheet" href="../static/style.css" type="text/css" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.12/css/all.css" integrity="sha384-G0fIWCsCzJIMAVNQPfjH08cyYaUtMwjJwqiRKxxE/rx96Uroj1BtIQ6MLJuheaO9" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous" />
+    <link href="https://fonts.googleapis.com/css?family=Titan+One" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css" />
+    <link rel="stylesheet" href="../static/css/style.css" type="text/css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 
-<body>
+<body id="lists">
     <header>
+        <nav class="navbar navbar-default">
+          <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              <a class="navbar-brand" href="#">Shopping List App</a>
+            </div>
+        
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+              <ul class="nav navbar-nav">
+                <li><a href="/">Home <span class="sr-only">(current)</span></a></li>
+                <li><a href="/{{user_name}}">Lists</a></li>
+                <li><a href="/logout">Log Out</a></li>
+              </ul>
+              
+            </div><!-- /.navbar-collapse -->
+          </div><!-- /.container-fluid -->
+        </nav>
         <div class="container">
-            <div class="row ">
-                <div class="col-sm-6 user_info_left">
-                    <h1>User Details</h1>
-                    <a href="/">
-                        <p>logout</p>
-                    </a>
+            <br>
+            <br>
+            {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                    <br>
+                    <div class="messages">
+                        {% for message in messages %}
+                        <div class="alert alert-info alert-dismissible">
+                            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                            {{ message }}
+                        </div><br>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            {% endwith %}             
+        </div>
+    </header>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-4 lists-column">
+                <h3>Hello <span class="name">{{user_name}}</span></h3>
+                {% if priorities %}
+                <h4>Priorities:</h4>
+                <table class="table table-striped">
+                    <tr>
+                        <th>Item</th>
+                        <th>List</th>
+                        <th>Delete Item</th>
+                    </tr>
+                    {% for prio in priorities %}
+                    <tr>
+                        <td>{{ prio.item_name }}</td>
+                        <td>{{ prio.list_name }}</td>
+                        <td>
+                            <form action="/{{user_name}}/{{prio.list_name}}/{{prio.item_name}}/delete_item" method="POST">
+                                <input class="btn btn-danger" type="submit" value="Delete" />
+                            </form>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </table>
+                {% endif %}
+                {% if lists %}
+                <h4>Your lists:</h4>
+                <table class="table table-striped">
+                    <tr>
+                        <th>Name</th>
+                        <th>View</th>
+                        <th>Actions</th>
+                    </tr>
+                    {% for list in lists %}
+                    
+                    <tr>
+                        <td><h5>{{list.list_name}}</h5></td>
+                        <td><button class="btn btn-primary" data-toggle="collapse" data-target="#table-{{loop.index}}">Open list</button></td>
+                        <td>
+                            <form action="/{{user_name}}/{{list.list_name}}/delete_list" method="POST">
+                            <input type="text" name="list_name" value="{{list.list_name}}" hidden />
+                            <input type="text" name="user_name" value="{{user_name}}" hidden />
+                            <input type="submit" class="btn btn-danger" value="Delete" />
+                            </form>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </table>
+                {% endif %}
+                <br><br>
+                <form action="/{{user_name}}/create_new_list" method="POST">
+                    <label>Add list title and create new list</label>
+                    <input class="form-control" type="text" name="list_name" placeholder="Add title eg food, todo..." required="required" /> </br>
+                    <input class="btn btn-success" type="submit" value="Create list" />
+                </form>
+            </div>
+            <div class="col-sm-1"></div>
+            <div id="myGroup" class="col-sm-7 items-column">
+                <div id="welcome-message" class="collapse in">
+                    <h3>Hey !</h3>
+                    <p>Please choose Shopping List on the left to view items</p><br>
+                    <img title="Add New Shopping List" src="/static/image/bags-on-the-floor.jpg" class="img-responsive" alt="Woman Shopping" />
+                    <br>
                 </div>
-                <div class="col-sm-6">
-                    <h1>{{username}}'s Shopping List</h1>
+                {% if lists %}
+                {% for list in lists %}
+                <div id="table-{{loop.index}}" class="collapse">
+                    <h3>{{list.list_name}}</h3>
+                <table class="table table-bordered">
+                    <tr>
+                        <th>Item</th>
+                        <th>Quantity</th>
+                        <th>Priority</th>
+                        <th>Action</th>
+                    </tr>
+                    {% if list.list_items %} 
+                    {% for item in list.list_items %}
+                    <tr>
+                        <td>{{item.item_name}}</td>
+                        <td>{{item.item_quantity}}</td>
+                        <td><input class="priority-added" name="priority-added" type="checkbox" 
+                        {% if item.item_priority == 1 %}
+                            checked
+                        {% endif %}
+                        onclick="return false;" onkeydown="return false;"
+                        ></td>
+                        <td>
+                            <form action="/{{user_name}}/{{list.list_name}}/{{item.item_name}}/delete_item" method="POST">
+                            <input class="btn btn-danger" type="submit" value="Delete" />
+                            </form>
+                        </td>
+                        
+                    </tr>
+                    {% endfor %}
+                    <tr class="bg-success">
+                    <form method="POST" action="/{{user_name}}/{{list.list_name}}/add_item">
+                    <td><input placeholder="Item name" class="form-control" type="text" name="item_name" required="required" /></td>
+                    <td><input class="form-control" value="1" name="item_quantity" type="number"></td>
+                    <td><input value="1" name="item_priority" class="item_priority" type="checkbox"></td>
+                    <td><input class="btn btn-success" type="submit" value="Add Item" /></td>
+                    </form>
+                    </tr>
+                    {% else %}
+                    <tr><td>You Have no items, add some</td></tr>
+                    <tr>
+                    <form method="POST" action="/{{user_name}}/{{list.list_name}}/add_item">
+                    <td><input placeholder="Item name" class="form-control" type="text" name="item_name" required="required" /></td>
+                    <td><input class="form-control" value="1" name="item_quantity" type="number"></td>
+                    <td><input value="1" name="item_priority" class="priority" type="checkbox" /></td>
+                    <td><input class="btn btn-success" type="submit" value="Add Item" /></td>
+                    </form>
+                    </tr>
+                    {% endif %}
+                    </table>
+                    </div>
+                    
+                    {% endfor %}
+                    {% else %}
+
+                    {% endif %}
                 </div>
+
+
             </div>
         </div>
-     </header>
-        <div class="container">
-            <div class="row">
-                <div class="col-sm-6">
-                    <form action="/{{username}}/create_new_list" method="POST">
-                        <input type="text" name="list_name" placeholder="Add a category eg clothes.." required="required" />
-                        <input type="submit" value="Add a List" />
-                    </form>
-                    </div>
-                    <div class="col-sm-6">
-                        {% if documents %} {% for document in documents %}
-                        <h3>{{document.name}} </h3>
-                        {% if document.list_items %} {% for item in document.list_items %}
-                        <div class="item">
-                            <p>{{item}}</p>
-                            <form action="/{{username}}/{{document.name}}/{{item}}/delete_item" method="POST">
-                                <input type="submit" value="Delete" />
-                            </form>
-                            <label>
-                  <input id="priority" name="priority" type="checkbox">
-                  <span class="lever"></span>
-                  Is Urgent
-                </label>
-                        </div>
-                        {% endfor %} {% else %}
-                        <p>You have no items!</p>
-                        {% endif %}
+    </div>
 
-                        <form method="POST" action="/{{username}}/{{document.name}}/add_item">
-                            <input type="text" name="list_item" required="required" />
-                            <input type="submit" value="Add An item" />
-                        </form>
-                        {% endfor %} {% else %}
-                        <p>You Need to Add a List</p>
-                        {% endif %}
-                        
-                    </div>
-                    </div>
-                </div>
-
+<script>
+var $myGroup = $('#myGroup');
+$myGroup.on('show.bs.collapse','.collapse', function() {
+    $myGroup.find('.collapse.in').collapse('hide');
+});
+</script>
+<br/><br/><br/>
 </body>
 
 </html>
