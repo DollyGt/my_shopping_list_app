@@ -1,7 +1,6 @@
 from __future__ import print_function
 import sys
 import os
-import json
 from flask import Flask, request, render_template, redirect, flash, session, abort
 from pymongo import MongoClient
 from bson.objectid import ObjectId
@@ -28,6 +27,7 @@ def do_login():
         password = request.form['password'].strip()
         mode = request.form['mode']
         user = get_user(user_name)
+        eprint(user)
         if mode == 'login':
             if not user:
                 msgString = 'There is no user "%s"'%(user_name)
