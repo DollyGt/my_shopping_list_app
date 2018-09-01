@@ -161,15 +161,17 @@ def load_priority_items(user_lists):
 
 def get_user(user_name):
     user = {}
-    client = MongoClient(MONGODB_URI)
-    db = client[MONGODB_NAME]
+    with MongoClient(MONGODB_URI) as conn:
+        db = conn[MONGODB_NAME]
+    # client = MongoClient(MONGODB_URI)
+    # db = client[MONGODB_NAME]
     users = db['users']
     res = users.find({'user_name':user_name})
     for u in res:
         user = u
         
-    eprint(user)
-    client.close()
+    # eprint(user)
+    # client.close()
     return user
 
 
