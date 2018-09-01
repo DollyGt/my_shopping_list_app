@@ -6,8 +6,6 @@ from bson.objectid import ObjectId
 import sys
 import logging
 
-app.logger.addHandler(logging.StreamHandler(sys.stdout))
-app.logger.setLevel(logging.ERROR)
 
 MONGODB_URI = os.environ.get("MONGODB_URI")
 MONGODB_NAME = os.environ.get("MONGODB_NAME")
