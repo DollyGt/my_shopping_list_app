@@ -168,7 +168,7 @@ def get_user(user_name):
     for u in res:
         user = u
         
-    # eprint(user)
+    eprint(user)
     client.close()
     return user
 
