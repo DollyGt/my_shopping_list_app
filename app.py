@@ -9,6 +9,7 @@ import logging
 
 MONGODB_URI = os.environ.get("MONGODB_URI")
 MONGODB_NAME = os.environ.get("MONGODB_NAME")
+DUPA = os.environ.get("DUPA")
 
 app = Flask(__name__)
 app.secret_key = "secretKeyHere"
@@ -158,6 +159,7 @@ def load_priority_items(user_lists):
 
 def get_user(user_name):
     user = {}
+    return render_template('index.html', user_name=DUPA)
     client = MongoClient(MONGODB_URI)
     db = client[MONGODB_NAME]
     users = db['users']
