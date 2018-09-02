@@ -10,7 +10,7 @@ MONGODB_NAME = os.environ.get("MONGODB_NAME")
 app = Flask(__name__)
 app.secret_key = "secretKeyHere"
 
-# The index page shows  login and register 
+# The index page shows login and register 
 @app.route('/')
 def get_index():
     if 'user_name' in session:
@@ -29,13 +29,13 @@ def do_login():
     user = get_user(user_name)
     if mode == 'login':
         
-        # if against saved user name if not save, there is no user alert
+        # checks against saved user name if not saved, returns there is no user alert message
         if not user:
             msgString = 'There is no user "%s"'%(user_name)
             flash(msgString)
             return render_template('index.html')
         else:
-            # check against stored password and if it is the same allow user otherwise deny acess
+            # checks against stored password and if it is the same allow user otherwise deny acess
 
             if not user['password'] == password:
                 msgString = 'Wrong password !!'
@@ -50,6 +50,8 @@ def do_login():
                 #flash(msgString)
                 return render_template('index.html', user_name=user_name)
     
+    #checks against stored names if user of similar name exists deny access
+    #alert message user of same already exists
     else:
         if not user:
             insertNewUser(user_name, password)
