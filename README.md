@@ -1,6 +1,6 @@
 **Important message!**
 
-*Due to having my app crushing on heroku, i had to figure out why it was not working. I ended up tracing my code from when the app was last working on heroku, as a result, i copied all my code to a different working environment to work from there as an effort to find out where the problem was. I then pasted all the code from since when the app was working to the original work space from which i had deletd the code that was failing in heroku and this did work. I figured out that once i changed my MongoDB details in MLab i never updated my config vars details. After that, i went back to the code that i had deletd and i pasted it back. These changes affected my commits update. Please refer to history on my repository to see all my commits history.*
+*Due to having my app crushing on heroku, i had to figure out why it was not working. I ended up tracing my code from when the app was last working on heroku, as a result, i copied all my code to a different working environment to work from there as an effort to find out where the problem was. I then pasted all the code from since when the app was working to the original work space from which i had deletd the code that was failing in heroku and this did work. I figured out that once i changed my MongoDB details in MLab i never updated my config vars details. After that, i went back to the code that i had deletd and i pasted it back. These changes affected my commits update. Please refer to history on my repository to see all my original commits history.*
 
 # Shopping List App - Data Centric Development
 
@@ -33,9 +33,9 @@ In order to use this site, users must first register and if they are already reg
 
 * Screenshots.
 
-<!--![alt text](https://github.com/DollyGt/my_shopping_list_app/blob/master/static/image/bags.jpg)-->
+![alt text](https://github.com/DollyGt/my_shopping_list_app/blob/master/static/image/screenshot1.png)
 
-<!--![alt text](https://github.com/DollyGt/my_shopping_list_app/blob/master/static/image/bags.jpg)-->
+![alt text](https://github.com/DollyGt/my_shopping_list_app/blob/master/static/image/screenshot2.png)
 
 
 # Features Left to Implement
