@@ -23,43 +23,39 @@ def get_index():
     
 @app.route("/login", methods=['POST'])
 def do_login():
-    with MongoClient(MONGODB_URI) as conn:
-        db = conn[MONGODB_NAME]
-        user_name = request.form['user_name'].strip()
-        password = request.form['password'].strip()
-        mode = request.form['mode']
-        return render_template('index.html')
-        user = get_user(user_name)
-        eprint(user)
-        if mode == 'login':
-            if not user:
-                msgString = 'There is no user "%s"'%(user_name)
+    user_name = request.form['user_name'].strip()
+    password = request.form['password'].strip()
+    mode = request.form['mode']
+    user = get_user(user_name)
+    eprint(user)
+    if mode == 'login':
+        if not user:
+            msgString = 'There is no user "%s"'%(user_name)
+            flash(msgString)
+            return render_template('index.html')
+        else:
+            if not user['password'] == password:
+                msgString = 'Wrong password !!'
                 flash(msgString)
                 return render_template('index.html')
+            
             else:
-                if not user['password'] == password:
-                    msgString = 'Wrong password !!'
-                    flash(msgString)
-                    return render_template('index.html')
-                
-                else:
-                    session['logged_in'] = True
-                    session['user_name'] = user_name
-                    msgString = 'Password is fine move forward'
-                    #flash(msgString)
-                    return render_template('index.html', user_name=user_name)
-        
-        else:
-            user = db['users'].find_one({'user_name':user_name})
-            if not user:
-                db['users'].insert({'user_name': user_name, 'password':password, 'lists':[]})
                 session['logged_in'] = True
                 session['user_name'] = user_name
-                return render_template('index.html',user_name=user_name)
-            else:
-                msgString = 'User with the same name already exist'
-                flash(msgString)
-                return render_template('index.html')
+                msgString = 'Password is fine move forward'
+                #flash(msgString)
+                return render_template('index.html', user_name=user_name)
+    
+    else:
+        if not user:
+            insertNewUser(user_name, password)
+            session['logged_in'] = True
+            session['user_name'] = user_name
+            return render_template('index.html',user_name=user_name)
+        else:
+            msgString = 'User with the same name already exist'
+            flash(msgString)
+            return render_template('index.html')
 
 
 @app.route("/logout")
@@ -173,6 +169,12 @@ def get_user(user_name):
     client.close()
     return user
 
+def insertNewUser(user_name, password):
+    user = {}
+    client = MongoClient(MONGODB_URI)
+    db = client[MONGODB_NAME]
+    db['users'].insert({'user_name': user_name, 'password':password, 'lists':[]})
+    client.close()
 
 def removeObjFromList(list, item_name):
     for counter, item in enumerate(list):
