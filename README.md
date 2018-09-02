@@ -95,7 +95,7 @@ For deployment, you would have to:
 
 # To install and have it running
 
-Go to this repository lin below:
+Go to this repository link below:
 
 * repository [link](https://github.com/DollyGt/my_shopping_list_app).
 
