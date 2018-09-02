@@ -1,15 +1,11 @@
-from __future__ import print_function
 from flask import Flask, request, render_template, redirect, flash, session, abort
 import os
 from pymongo import MongoClient
-from bson.objectid import ObjectId
 import sys
 import logging
 
-
 MONGODB_URI = os.environ.get("MONGODB_URI")
 MONGODB_NAME = os.environ.get("MONGODB_NAME")
-DUPA = os.environ.get("DUPA")
 
 app = Flask(__name__)
 app.secret_key = "secretKeyHere"
@@ -28,7 +24,6 @@ def do_login():
     password = request.form['password'].strip()
     mode = request.form['mode']
     user = get_user(user_name)
-    eprint(user)
     if mode == 'login':
         if not user:
             msgString = 'There is no user "%s"'%(user_name)
@@ -67,7 +62,6 @@ def get_user(user_name):
     for u in res:
         user = u
         
-    # eprint(user)
     client.close()
     return user
 
@@ -196,9 +190,6 @@ def save_user_lists(user):
         db['users'].find_one_and_update({"_id": user['_id']}, 
                                  {"$set": {"lists": user['lists']}})
     return
-
-def eprint(*args, **kwargs):
-    print(*args, file=sys.stderr, **kwargs)
 
         
 if __name__ == '__main__':
