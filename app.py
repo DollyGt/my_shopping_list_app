@@ -10,6 +10,7 @@ MONGODB_NAME = os.environ.get("MONGODB_NAME")
 app = Flask(__name__)
 app.secret_key = "secretKeyHere"
 
+# The index page shows  login and register 
 @app.route('/')
 def get_index():
     if 'user_name' in session:
@@ -17,7 +18,9 @@ def get_index():
     else:
         user_name='nouserinsession'
     return render_template('index.html', user_name=user_name)
-    
+
+# log the new user in once created 
+
 @app.route("/login", methods=['POST'])
 def do_login():
     user_name = request.form['user_name'].strip()
@@ -25,16 +28,21 @@ def do_login():
     mode = request.form['mode']
     user = get_user(user_name)
     if mode == 'login':
+        
+        # if against saved user name if not save, there is no user alert
         if not user:
             msgString = 'There is no user "%s"'%(user_name)
             flash(msgString)
             return render_template('index.html')
         else:
+            # check against stored password and if it is the same allow user otherwise deny acess
+
             if not user['password'] == password:
                 msgString = 'Wrong password !!'
                 flash(msgString)
                 return render_template('index.html')
             
+            #gives access after checking against correct login details
             else:
                 session['logged_in'] = True
                 session['user_name'] = user_name
@@ -65,6 +73,7 @@ def get_user(user_name):
     client.close()
     return user
 
+# the logout route logs the user out of session
 @app.route("/logout")
 def logout():
     session['logged_in'] = False
@@ -72,7 +81,8 @@ def logout():
     msgString = 'Successfully logged out'
     flash(msgString)
     return render_template('index.html')
-    
+ 
+ #calls for priority items   
 @app.route("/<user_name>/") 
 def get_userpage(user_name):
     user = get_user(user_name)
@@ -87,6 +97,7 @@ def get_userpage(user_name):
     priorities = load_priority_items(lists)
     return render_template("user_home.html", user_name=user_name, lists=lists, priorities=priorities)
 
+# for creating list/categories of shopping list
 @app.route("/<user_name>/create_new_list", methods=["POST"]) 
 def create_list(user_name):
     list_name= request.form['list_name']
@@ -94,7 +105,10 @@ def create_list(user_name):
     msgString = 'Your list "%s" is created '%(list_name)
     flash(msgString)
     return redirect(user_name)
-    
+
+# create actual items within a chosen title/catergory   
+#option to mark if item is priority or not
+#create separate entry for items marked as priority
 @app.route("/<user_name>/<list_name>/add_item", methods=["POST"]) 
 def add_item_to_list(user_name, list_name):
     user = get_user(user_name)
@@ -111,14 +125,17 @@ def add_item_to_list(user_name, list_name):
         priority = 1
     else:
         priority = 0
-
+ 
+ #for item marked as priority, calls alert message
     list_item= {'item_name': item_name, 'item_priority': priority, 'item_quantity': quantity}
     user['lists'][list_index]['list_items'].append(list_item)
     save_user_lists(user)
     msgString = 'Item "%s", added to "%s" list !'%(item_name,list_name)
     flash(msgString)
     return redirect(user_name)
-    
+
+#deleting of shopping list item
+#alert message on successful deleted item
 @app.route('/<user_name>/<list_name>/<item_name>/delete_item',methods=['POST'])
 def delete_item(user_name, list_name, item_name):
     user = get_user(user_name)
@@ -132,7 +149,7 @@ def delete_item(user_name, list_name, item_name):
     flash(msgString)
     return redirect(user_name)
     
-    
+#delete all existing user lists    
 @app.route('/<user_name>/<list_name>/delete_list',methods=['POST'])        
 def delete_list(user_name, list_name):
     user = get_user(user_name)
@@ -142,7 +159,8 @@ def delete_list(user_name, list_name):
             del(user['lists'][counter])
             deleted = True
             break
-
+#alert message if the delete is successful
+#otherwise if delete fail alert message of something went wrong
     if deleted:
         save_user_lists(user)
         msgString = 'Your list "%s" is deleted '%(list_name)
@@ -152,6 +170,7 @@ def delete_list(user_name, list_name):
     flash(msgString)
     return redirect(user_name)
 
+#group prioprity items
 def load_priority_items(user_lists):
     lists_with_priority = []
     for list in user_lists:
@@ -170,6 +189,7 @@ def insertNewUser(user_name, password):
     db['users'].insert({'user_name': user_name, 'password':password, 'lists':[]})
     client.close()
 
+#remove item from list
 def removeObjFromList(list, item_name):
     for counter, item in enumerate(list):
         if item['item_name'] == item_name:
@@ -178,12 +198,14 @@ def removeObjFromList(list, item_name):
         
     return list
 
+#all use lists created for storing
 def create_list_for_user(user_name, list_name):
     user = get_user(user_name)
     user['lists'].append({'list_name':list_name, 'list_items':[]})
     save_user_lists(user)
     return
 
+#save all lists
 def save_user_lists(user):
     with MongoClient(MONGODB_URI) as conn:
         db = conn[MONGODB_NAME]
