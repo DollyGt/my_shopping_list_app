@@ -160,8 +160,8 @@ def load_priority_items(user_lists):
 def get_user(user_name):
     user = {}
     session['logged_in'] = True
-    session['user_name'] = DUPA
-    return render_template('index.html', user_name=DUPA)
+    session['user_name'] = "aasd"
+    return render_template('index.html', user_name="asda")
     client = MongoClient(MONGODB_URI)
     db = client[MONGODB_NAME]
     users = db['users']
