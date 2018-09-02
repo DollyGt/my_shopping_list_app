@@ -23,12 +23,12 @@ def get_index():
     
 @app.route("/login", methods=['POST'])
 def do_login():
-    return render_template('index.html')
     with MongoClient(MONGODB_URI) as conn:
         db = conn[MONGODB_NAME]
         user_name = request.form['user_name'].strip()
         password = request.form['password'].strip()
         mode = request.form['mode']
+        return render_template('index.html')
         user = get_user(user_name)
         eprint(user)
         if mode == 'login':
