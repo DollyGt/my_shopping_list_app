@@ -1,12 +1,12 @@
 **Important message!**
 
-*Due to having my app crushing on heroku, i had to figure out why it was not working. I ended up tracing my code from when the app was last working on heroku, as a result, i copied all my code to a different working environment to work from there as an effort to find out where the problem was. I then pasted all the code from since when the app was working to the original work space from which i had deletd the code that was failing in heroku and this did work. I figured out that once i changed my MongoDB details in MLab i never updated my config vars details. After that, i went back to the code that i had deletd and i pasted it back. These changes affected my commits update. Please refer to my commits to see history of all commits of this repository from the very beginning.*
+*Due to having my app crushing on heroku, i had to figure out why it was not working. I ended up tracing my code from when the app was last working on heroku, as a result, i copied all my code to a different working environment to work from there as an attempt to find out where the problem was. I then pasted all the code from since when the app was working to the original work space from which i had deleted the code that was failing in heroku and this did work. I figured out that once i changed my MongoDB details in MLab i never updated my config vars details. After that, i went back to the code that i had deletd and i pasted it back. These changes affected my commits update and timeline. Please refer to my commits to see history of all original commits of this repository from the very beginning.*
 
 # Shopping List App - Data Centric Development
 
 This site is a shopping list application which is designed to help users to keep track of their shopping list as well as manage their shopping list.
 
-The idea behind this choice of application is based on my personal experiences. I have always struggled to do my shopping properly and sticking to the things that I needed, sometimes forgetfulness and random purchases took control as a result I ended up spending more money and time than I had intended to. Going shopping can be really challenging when you have forgotten your list, by the time you get home only then you realize you forgot to pick up one or two things, therefore if one has a shopping list app, not only can they eliminate unnecessary return trips, they can also save money by eliminating random purchases.
+The idea behind this choice of application is based on my personal experiences. I have always struggled to do my shopping properly and sticking to the things that I needed, sometimes forgetfulness and random purchases took control as a result I ended up spending more money and time than I had intended to. Going shopping can be really challenging when you have forgotten your list, by the time you get home only then you realize you forgot to pick up one or two things, therefore if one has a shopping list app, not only can they eliminate unnecessary return trips, they can also save money by eliminating random purchases. Users would be able to save all their list with a user friendly app.
 
 Click on this [link](https://dollys-shopping-list.herokuapp.com/) to access a live version of this site.
 
@@ -18,7 +18,7 @@ The user can add a list whenever they think of an item and can even prioritize t
 
 # Features
 
-In order to use this site, users must first register and if they are already registered they may go ahead and log in. There is a confirmation message that pops ut to let the user that their profile had been created successfully.
+In order to use this site, users must first register and if they are already registered they may go ahead and log in. There is a confirmation message that pops up to let the user know that their profile had been created successfully.
 
 1.Add list title – user creates a title for the list to be stored
 
@@ -45,8 +45,6 @@ I would like to add a built-in recipe books where users would be able to add rec
 I would also like to add a delayed list feature – this feature would allow the user to add from their list the items that are needed only very late in a month or so, this would be followed by a reminder nearing the date in which the initial purchase is intended.
 
 # Technologies Used
-
-In this section, you should mention all of the languages, frameworks, libraries, and any other tools that you have used to construct this project. For each, provide its name, a link to its official site and a short sentence of why it was used.
 
 The technologies used for this website are as follows:
 
@@ -76,7 +74,7 @@ An empty form will return a field required message if the user fails to type in 
 
 # Deployment
 
-GitHub pages are used for hosting while the master branch is deployed to Heroku. Please click here to see a live demo on Heroku.
+GitHub pages are used for hosting while the master branch is deployed to Heroku. 
 
 For deployment, you would have to:
 
@@ -92,7 +90,7 @@ For deployment, you would have to:
 
 `gunicorn should now be in the requirements.txt`
 
-`Go to heroku and link the Github repository by deploying it manually. Once this step is done, each time you push to Github the Github master branch would be automatically update.`
+`Go to heroku and link the Github repository by deploying it manually. Once this step is done, each time you push to Github the Github master branch would automatically update.`
 
 
 # To install and have it running
