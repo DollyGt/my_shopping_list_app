@@ -23,6 +23,7 @@ def get_index():
     
 @app.route("/login", methods=['POST'])
 def do_login():
+    return render_template('index.html')
     with MongoClient(MONGODB_URI) as conn:
         db = conn[MONGODB_NAME]
         user_name = request.form['user_name'].strip()
@@ -161,17 +162,15 @@ def load_priority_items(user_lists):
 
 def get_user(user_name):
     user = {}
-    with MongoClient(MONGODB_URI) as conn:
-        db = conn[MONGODB_NAME]
-    # client = MongoClient(MONGODB_URI)
-    # db = client[MONGODB_NAME]
+    client = MongoClient(MONGODB_URI)
+    db = client[MONGODB_NAME]
     users = db['users']
     res = users.find({'user_name':user_name})
     for u in res:
         user = u
         
     # eprint(user)
-    # client.close()
+    client.close()
     return user
 
 
