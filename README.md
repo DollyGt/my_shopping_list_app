@@ -97,7 +97,7 @@ For deployment, you would have to:
 
 Go to this repository lin below:
 
-* git clone followed by this repository [link](https://github.com/DollyGt/my_shopping_list_app).
+* repository [link](https://github.com/DollyGt/my_shopping_list_app).
 
 Once there, git clone the repository and then from your terminal run the following command:
 
