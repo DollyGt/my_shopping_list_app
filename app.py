@@ -28,7 +28,6 @@ def do_login():
     password = request.form['password'].strip()
     mode = request.form['mode']
     user = get_user(user_name)
-    return true
     eprint(user)
     if mode == 'login':
         if not user:
@@ -59,6 +58,18 @@ def do_login():
             flash(msgString)
             return render_template('index.html')
 
+def get_user(user_name):
+    user = {}
+    client = MongoClient(MONGODB_URI)
+    db = client[MONGODB_NAME]
+    users = db['users']
+    res = users.find({'user_name':user_name})
+    for u in res:
+        user = u
+        
+    # eprint(user)
+    client.close()
+    return user
 
 @app.route("/logout")
 def logout():
@@ -157,22 +168,6 @@ def load_priority_items(user_lists):
                 lists_with_priority.append({'list_name':list_name, 'item_name': item_name})
         
     return lists_with_priority
-
-def get_user(user_name):
-    user = {}
-    session['logged_in'] = True
-    session['user_name'] = "aasd"
-    return render_template('index.html', user_name="asda")
-    client = MongoClient(MONGODB_URI)
-    db = client[MONGODB_NAME]
-    users = db['users']
-    res = users.find({'user_name':user_name})
-    for u in res:
-        user = u
-        
-    # eprint(user)
-    client.close()
-    return user
 
 def insertNewUser(user_name, password):
     user = {}
