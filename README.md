@@ -1,10 +1,14 @@
+**Important message!**
+
+*Due to having my app crushing on heroku, i had to figure out why it was not working. I ended up tracing my code from when the app was last working on heroku, as a result, i copied all my code to a different working environment to work from there as an effort to find out where the problem was. I then pasted all the code from since when the app was working to the original work space from which i had deletd the code that was failing in heroku and this did work. I figured out that once i changed my MongoDB details in MLab i never updated my config vars details. After that, i went back to the code that i had deletd and i pasted it back. These changes affected my commits update. Please refer to history on my repository to see all my commits history.*
+
 # Shopping List App - Data Centric Development
 
 This site is a shopping list application which is designed to help users to keep track of their shopping list as well as manage their shopping list.
 
 The idea behind this choice of application is based on my personal experiences. I have always struggled to do my shopping properly and sticking to the things that I needed, sometimes forgetfulness and random purchases took control as a result I ended up spending more money and time than I had intended to. Going shopping can be really challenging when you have forgotten your list, by the time you get home only then you realize you forgot to pick up one or two things, therefore if one has a shopping list app, not only can they eliminate unnecessary return trips, they can also save money by eliminating random purchases.
 
-Click on this [link](https://www.shoutem.com/builder/design/smartphone?nid=207360545&signup=true#/homepage/) to access a live version of this site.
+Click on this [link](https://dollys-shopping-list.herokuapp.com/) to access a live version of this site.
 
 # UX
 
@@ -26,9 +30,8 @@ In order to use this site, users must first register and if they are already reg
 
 5.Success messages - Each time the user add a title, delete item or update their list, there is a pop up message that follows to let them know that their action was a success.
 
-See a brief overview of how the site looks in different screens
 
-* Below are screenshots of how the site looks on different screen sizes.
+* Screenshots.
 
 <!--![alt text](https://github.com/DollyGt/my_shopping_list_app/blob/master/static/image/bags.jpg)-->
 
@@ -65,11 +68,11 @@ The website is user friendly, recognises  desktop browsers and it is also mobile
 
 All forms were tested
 
-Users would have to either log in or register otherwise the form will pass in error
+Users would have to either log in or register otherwise the form will pass in error if they attempt logging in without first registering. Once a user is registered, to log they would be required to enter their registed login details. If the user enters different login details, there would be alerted that the login details are wrong therefore the form would never submit. I tested to see that the forms all work as intended and this was a success.
 
 If a user is not registered and they try to log in , the error message will return to let them know that there is no user of that particular name
 
-An empty form will return a field required message if the user fails to type in their list title
+An empty form will return a field required message if the user fails to type in their list title. No form can submit if the user have not created a list title for their shopping list.
 
 
 # Deployment
