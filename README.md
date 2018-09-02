@@ -1,6 +1,6 @@
 **Important message!**
 
-*Due to having my app crushing on heroku, i had to figure out why it was not working. I ended up tracing my code from when the app was last working on heroku, as a result, i copied all my code to a different working environment to work from there as an effort to find out where the problem was. I then pasted all the code from since when the app was working to the original work space from which i had deletd the code that was failing in heroku and this did work. I figured out that once i changed my MongoDB details in MLab i never updated my config vars details. After that, i went back to the code that i had deletd and i pasted it back. These changes affected my commits update. Please refer to history on my repository to see all my original commits history.*
+*Due to having my app crushing on heroku, i had to figure out why it was not working. I ended up tracing my code from when the app was last working on heroku, as a result, i copied all my code to a different working environment to work from there as an effort to find out where the problem was. I then pasted all the code from since when the app was working to the original work space from which i had deletd the code that was failing in heroku and this did work. I figured out that once i changed my MongoDB details in MLab i never updated my config vars details. After that, i went back to the code that i had deletd and i pasted it back. These changes affected my commits update. Please refer to my commits to see history of all commits of this repository from the very beginning.*
 
 # Shopping List App - Data Centric Development
 
@@ -74,7 +74,6 @@ If a user is not registered and they try to log in , the error message will retu
 
 An empty form will return a field required message if the user fails to type in their list title. No form can submit if the user have not created a list title for their shopping list.
 
-
 # Deployment
 
 GitHub pages are used for hosting while the master branch is deployed to Heroku. Please click here to see a live demo on Heroku.
@@ -87,9 +86,9 @@ For deployment, you would have to:
 
 `pip install the following:`
 
-`sudo pip3 freeze --local >requirements.txt`
+`$ sudo pip3 freeze --local >requirements.txt`
 
-`sudo pip3 install gunicorn`
+`$ sudo pip3 install gunicorn`
 
 `gunicorn should now be in the requirements.txt`
 
@@ -98,10 +97,13 @@ For deployment, you would have to:
 
 # To install and have it running
 
-To clone this repository follow the following command:
+Go to this repository lin below:
 
 * git clone followed by this repository [link](https://github.com/DollyGt/my_shopping_list_app).
 
+Once there, git clone the repository and then from your terminal run the following command:
+
+`$ sudo pip3 -r install requirements.txt`
 
 # Media
 
