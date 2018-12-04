@@ -1,10 +1,10 @@
 #login {
-    background-image: url('../image/woman.jpg');
-    background-size: cover;
+    background-color: #00FFFF;
+    
 }
 #lists {
-    background-image: url('../image/bags.jpg');
-    background-size: cover; 
+    background-color: gray;
+   
 }
 .lists-column {
     background-color: rgba(255,255,255,0.85);
